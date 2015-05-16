@@ -2,6 +2,8 @@
 
 Every form of function expression assignment in ES6 infers a `name` that can be used inside the function for recursion. This is true, _except_ for object literal function assignment. This rule will catch any instance where a function name is not explicitly defined within an object literal function assignment.
 
+More information about this issue can be found here - [eslint/eslint#2454](https://github.com/eslint/eslint/issues/2454#issuecomment-100285220) - and here - [babel/babel#1367](https://github.com/babel/babel/issues/1367).
+
 **Note** - Tests are provided in the repo, but not necessary for installation or use of the rule.
 
 ## Setup
