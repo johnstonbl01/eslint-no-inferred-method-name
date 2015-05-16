@@ -47,3 +47,5 @@ const repeater = {
 		return repeat(f, i);
 	}
 };
+
+undef();
