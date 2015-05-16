@@ -2,7 +2,7 @@
 
 Every form of function expression assignment in ES6 infers a `name` that can be used inside the function for recursion. This is true, _except_ for object literal function assignment. This rule will catch any instance where a function name is not explicitly defined within an object literal function assignment.
 
-*Note* - Tests are provided in the repo, but not necessary for installation or use of the rule.
+**Note** - Tests are provided in the repo, but not necessary for installation or use of the rule.
 
 ## Setup
 
@@ -58,7 +58,7 @@ In this code, no warnings are generated, since the `foo` method in the object li
 
 ```js
 var obj = {
-	foo: function foo (f, n) {   // 'foo' method has an explicitly defined method name
+	foo: function foo (f, n) {   // 'foo' has an explicitly defined method name
 		let i = n - 1;
 		return foo(f, i);
 	}
