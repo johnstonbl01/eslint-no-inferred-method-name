@@ -69,12 +69,12 @@ module.exports = function(context) {
                     name = ref.identifier.name;
 
                 /**
-                 * Checks if the provided node is a call expression for a function
-                 * Then checks to ensure that the parent function is part of an object literal
-                 * Finally checks for undefined variable condition
-                 * All conditions must be true to flag as a method inferrence error
+                 * Checks for object literal method
+                 * @param {ASTNode} node The AST node being checked.
+                 * @returns true if parent node is a call expression and is part of an object literal
                  */
-                function isMethod (node) {
+
+                function isMethod(node) {
                     var nodeParentType = node.parent.type,
                         nodeParentParentParentType = node.parent.parent.parent.type;
 
