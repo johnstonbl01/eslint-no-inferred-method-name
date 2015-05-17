@@ -88,7 +88,7 @@ const foo = {
     }
 
     return foo(f, i);   // foo is inferred within the compact object literal
-    					          // ES6 compact literal names should be explicitly defined
+    					   // ES6 compact literal names should be explicitly defined
   }
 };
 ```
