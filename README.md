@@ -66,3 +66,29 @@ var obj = {
 	}
 }
 ```
+In the below example, 1 warning is generated because a name is not explicitly defined for the ES6 compact object literal notation (`foo`).
+
+```js
+const foo = {
+  name: 'Foo',
+  types: [
+    { f: 'function' },
+    { n: 'number' }
+  ],
+  foo (f, n) {         // ES6 compact object literal method notation
+    let i = n - 1;
+
+    if (typeof f === 'function') {
+      f();
+    } else {
+      throw new Error('foo: A Function is required.');
+    }
+    if (!n) {
+      return undefined;
+    }
+
+    return foo(f, i);   // foo is inferred within the compact object literal
+    					// Compact literal names should be explicit
+  }
+};
+```
