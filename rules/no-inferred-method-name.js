@@ -56,7 +56,7 @@ function getDeclaredGlobalVariable(scope, ref) {
 
 module.exports = function(context) {
 
-    var NO_INFERRED_METHOD_MESSAGE = "\"{{name}}\" has no defined method name. Use syntax - foo: function foo {..}.";
+    var NO_INFERRED_METHOD_MESSAGE = "\"{{name}}\" has no lexical name binding. Use syntax \"foo: function foo {...}\" or call with \"this.foo()\".";
 
     return {
 
@@ -74,7 +74,7 @@ module.exports = function(context) {
                  * @returns true if parent node is a call expression and is part of an object literal
                  */
 
-                function isMethod(node) {
+                function isMethodCall(node) {
                     var nodeParentType = node.parent.type,
                         nodeParentParentParentType = node.parent.parent.parent.type;
 
@@ -85,7 +85,7 @@ module.exports = function(context) {
                     }
                 }
 
-                if (isMethod(ref.identifier)) {
+                if (isMethodCall(ref.identifier)) {
                     context.report(ref.identifier, NO_INFERRED_METHOD_MESSAGE, { name: name });
                 }
 

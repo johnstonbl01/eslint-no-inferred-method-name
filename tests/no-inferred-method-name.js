@@ -25,8 +25,8 @@ eslintTester.addRuleTest("lib/rules/no-inferred-method-name", {
         { code: "var obj = { foo() { } }", ecmaFeatures: { objectLiteralShorthandMethods: true } }
     ],
     invalid: [
-        { code: "var obj = { foo: function() { foo(); } }", errors: [{ message: "\"foo\" has no defined method name. Use syntax - foo: function foo {..}.", type: "Identifier"}] },
-        { code: "var obj = { otherObj: { foo: function() { foo(); } } }", errors: [{ message: "\"foo\" has no defined method name. Use syntax - foo: function foo {..}.", type: "Identifier"}] },
-        { code: "var obj = { foo() { foo(); } }", errors: [{ message: "\"foo\" has no defined method name. Use syntax - foo: function foo {..}.", type: "Identifier"}], ecmaFeatures: { objectLiteralShorthandMethods: true } }
+        { code: "var obj = { foo: function() { foo(); } }", errors: [{ message: "\"foo\" has no lexical name binding. Use syntax \"foo: function foo {...}\" or call with \"this.foo()\".", type: "Identifier"}] },
+        { code: "var obj = { otherObj: { foo: function() { foo(); } } }", errors: [{ message: "\"foo\" has no lexical name binding. Use syntax \"foo: function foo {...}\" or call with \"this.foo()\".", type: "Identifier"}] },
+        { code: "var obj = { foo() { foo(); } }", errors: [{ message: "\"foo\" has no lexical name binding. Use syntax \"foo: function foo {...}\" or call with \"this.foo()\".", type: "Identifier"}], ecmaFeatures: { objectLiteralShorthandMethods: true } }
     ]
 });

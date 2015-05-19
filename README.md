@@ -1,8 +1,11 @@
 # Disallow Inferred Method Names in Object Literals (no-inferred-method-name)
 
-Every form of function expression assignment in ES6 infers a `name` that can be used inside the function for recursion. This is true, _except_ for object literal function assignment. Due to this, calling the function name within the compact object literal function will return a reference error. This rule will catch any instance where a function name is not explicitly defined within a compact object literal function assignment.
+In ES6, compact methods and unnamed function expression assignments within object literals do not create a lexical identification (name) binding that corresponds to the function name identifier for recursion or event binding. The compact method syntax will not be an appropriate option for these types of solutions, and a named function expression should be used instead. This custom ESLint rule will identify instances where a function name is being called and a lexical identifier is unavailable within a compact object literal. 
 
-More information about this issue can be found here - [eslint/eslint#2454](https://github.com/eslint/eslint/issues/2454#issuecomment-100285220) - and here - [babel/babel#1367](https://github.com/babel/babel/issues/1367).
+More information on this can be found:
+- [eslint/eslint#2454](https://github.com/eslint/eslint/issues/2454#issuecomment-100285220)
+- [babel/babel#1367](https://github.com/babel/babel/issues/1367)
+- [ES6 Concise Methods: Lexical or Not?](http://blog.getify.com/es6-concise-methods-lexical-or-not/)
 
 **Note** - Tests are provided in the repo, but not necessary for installation or use of the rule.
 
@@ -45,50 +48,63 @@ Additionally, the above setup should enable the rule within your Text Editor or 
 
 ## Rule Details
 
-The following code causes 1 error, as the `foo` method does not have an explicitly defined name.
+In the example below, 1 error is generated because foo is being called recursively when there is no lexical name binding for the `foo` function using the concise object literal syntax. See links above for in-depth discussion on this behavior.
 
 ```js
-var obj = {
-	foo: function (f, n) {
-		let i = n - 1;
-		return foo(f, i);    // 'foo(f, i)' is an inferred method name
-	}
-}
-```
-
-In this code, no warnings are generated, since the `foo` method in the object literal has an explicitly defined name (`foo`)
-
-```js
-var obj = {
-	foo: function foo (f, n) {   // 'foo' has an explicitly defined method name
-		let i = n - 1;
-		return foo(f, i);
-	}
-}
-```
-In the below example, 1 warning is generated because a name is not explicitly defined for the ES6 compact object literal notation (`foo`).
-
-```js
-const foo = {
-  name: 'Foo',
+const bar = {
+  name: 'Bar',
   types: [
     { f: 'function' },
     { n: 'number' }
   ],
-  foo (f, n) {         // ES6 compact object literal method notation
-    let i = n - 1;
-
+  foo (f, n) {   // this function will not have any lexical binding for recursive calls
     if (typeof f === 'function') {
       f();
     } else {
       throw new Error('foo: A Function is required.');
     }
+    
+    n -= 1;
     if (!n) {
       return undefined;
     }
 
-    return foo(f, i);   // foo is inferred within the compact object literal
-    				// ES6 compact literal names should be explicitly defined
+    return foo(f, n);   // error on this line
   }
 };
+
+bar.foo(() => {console.log('baz');}, 3);
+//baz
+//ReferenceError: foo is not defined
+```
+
+In this example, no errors are generated because the function expression explicitly defines a lexical identifier.
+
+```js
+const bar = {
+  name: 'Bar',
+  types: [
+    { f: 'function' },
+    { n: 'number' }
+  ],
+  foo: function foo (f, n) {   // this function explicitly defines a lexical name for the method
+    if (typeof f === 'function') {
+      f();
+    } else {
+      throw new Error('foo: A Function is required.');
+    }
+    
+    n -= 1;
+    if (!n) {
+      return undefined;
+    }
+
+    return foo(f, n);
+  }
+};
+
+bar.foo(() => {console.log('baz');}, 3);
+//baz
+//baz
+//baz
 ```
