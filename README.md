@@ -87,7 +87,7 @@ const bar = {
     { f: 'function' },
     { n: 'number' }
   ],
-  foo: function foo (f, n) {   // this function explicitly defines a lexical name for the method
+  foo: function foo (f, n) {   // explicitly defines a lexical name for the method
     if (typeof f === 'function') {
       f();
     } else {
