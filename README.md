@@ -21,8 +21,10 @@ ESLint - Install globally with `npm install -g eslint`. More information on ESLi
 
 Install the plugin using NPM:
 ```
-$ npm install eslint-plugin-no-inferred-method-name
+$ npm install -g eslint-plugin-no-inferred-method-name
 ```
+
+_Note_: If ESLint is installed globally, the plugin must also be installed globally. If ESLint is installed locally within the project folder, then the plugin can also be installed locally by omitting the `-g`.
 
 ### Enable Plugin in ESLint Config File
 
