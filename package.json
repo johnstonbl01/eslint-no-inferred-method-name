@@ -1,0 +1,30 @@
+{
+  "name": "eslint-plugin-no-inferred-method-name",
+  "version": "1.0.0",
+  "description": "ES6 object literal method linting for ESLint.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./"
+  },
+  "files": [
+    "LICENSE.md",
+    "README.md",
+    "lib",
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnstonbl01/eslint-no-inferred-method-name.git"
+  },
+  "homepage": "https://github.com/johnstonbl01/eslint-no-inferred-method-name",
+  "bugs": "https://github.com/johnstonbl01/eslint-no-inferred-method-name/issues",
+  "keywords": [
+    "eslint",
+    "eslint-plugin"
+  ],
+  "author": "Blake Johnston <johnstonbl01@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^0.22.1"
+  }
+}

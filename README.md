@@ -17,27 +17,28 @@ Node.js & NPM - For instructions on how to install Node.js, check [here](https:/
 
 ESLint - Install globally with `npm install -g eslint`. More information on ESLint setup & configuration can be found [here](http://eslint.org/).
 
-### Copy Rules File to ESLint Rules Directory
+### Install Plugin via NPM
 
-Place the `no-inferred-method-name.js` from the `rules/` directory into your ESLint `lib/rules/` directory. If you're using a global installation of ESLint, then this can be found at `usr/lib/node_modules/eslint/` on a Linux Distro. For build system integration (Gulp, Grunt, etc), it's possible to copy this file into the `npm_modules/eslint/lib/rules/` directory within your project folder.
+Install the plugin using NPM:
+```
+$ npm install eslint-plugin-no-inferred-method-name
+```
 
-### Enable rule in ESLint Config File
+### Enable Plugin in ESLint Config File
 
 Within the project directory, create or edit the `.eslintrc` file to enable the new rule.
 
 ```js
 {
-    "rules": {
-        "no-inferred-method-name": 2
-    },
+    "plugins": [
+        "no-inferred-method-name"
+    ],
 
     "settings": {
         "ecmascript": 6
     }
 }
 ```
-
-The settings above ensure that ES6 is enabled and that the new rule flags as an error. If warnings are preferred over errors, change the value of `"no-inferred-method-name"` to `1`.
 
 ### Run ESLint
 
