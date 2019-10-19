@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-no-inferred-method-name",
   "version": "2.0.0",
-  "description": "ES6 object literal method linting for ESLint.",
+  "description": "ES6 object literal method linting for ESLint",
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./"
