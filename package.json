@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-no-inferred-method-name",
-  "version": "1.0.1",
-  "description": "ES6 object literal method linting for ESLint.",
+  "version": "2.0.0",
+  "description": "ES6 object literal method linting for ESLint",
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./"
@@ -25,6 +25,25 @@
   "author": "Blake Johnston <johnstonbl01@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^0.22.1"
+    "eslint": "^6.5.1",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "{lib, tests}/**/*.js": [
+      "prettier --write",
+      "npm run lint",
+      "git add"
+    ],
+    "*.{json, md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

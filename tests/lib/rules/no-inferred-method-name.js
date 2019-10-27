@@ -3,30 +3,35 @@
  * @author Blake Johnston
  */
 
-"use strict";
+'use strict';
 
-//------------------------------------------------------------------------------
-// Requirements
-//------------------------------------------------------------------------------
+const rule = require('../../../lib/rules/no-inferred-method-name');
+const RuleTester = require('eslint').RuleTester;
 
-var eslint = require("../../../lib/eslint"),
-    ESLintTester = require("eslint-tester");
+const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2015 } });
 
-//------------------------------------------------------------------------------
-// Tests
-//------------------------------------------------------------------------------
+const ERROR_MSG =
+  '"foo" has no lexical name binding. Use syntax "foo: function foo {...}" or call with "this.foo()".';
 
-var eslintTester = new ESLintTester(eslint);
-eslintTester.addRuleTest("lib/rules/no-inferred-method-name", {
-    valid: [
-        { code: "var a; a = 1; var obj = { foo: function foo() { a; } }"},
-        { code: "var obj = { foo: function foo() { foo(); } }"},
-        { code: "var obj = { otherObj: { foo: function foo() { foo(); } } }"},
-        { code: "var obj = { foo() { } }", ecmaFeatures: { objectLiteralShorthandMethods: true } }
-    ],
-    invalid: [
-        { code: "var obj = { foo: function() { foo(); } }", errors: [{ message: "\"foo\" has no lexical name binding. Use syntax \"foo: function foo {...}\" or call with \"this.foo()\".", type: "Identifier"}] },
-        { code: "var obj = { otherObj: { foo: function() { foo(); } } }", errors: [{ message: "\"foo\" has no lexical name binding. Use syntax \"foo: function foo {...}\" or call with \"this.foo()\".", type: "Identifier"}] },
-        { code: "var obj = { foo() { foo(); } }", errors: [{ message: "\"foo\" has no lexical name binding. Use syntax \"foo: function foo {...}\" or call with \"this.foo()\".", type: "Identifier"}], ecmaFeatures: { objectLiteralShorthandMethods: true } }
-    ]
+ruleTester.run('no-inferred-method-name', rule, {
+  valid: [
+    { code: 'var a; a = 1; var obj = { foo: function foo() { a; } }' },
+    { code: 'var obj = { foo: function foo() { foo(); } }' },
+    { code: 'var obj = { otherObj: { foo: function foo() { foo(); } } }' },
+    { code: 'var obj = { foo() { } }' }
+  ],
+  invalid: [
+    {
+      code: 'var obj = { foo() { foo() } };',
+      errors: [{ message: ERROR_MSG, type: 'Identifier' }]
+    },
+    {
+      code: 'var obj = { otherObj: { foo() { foo(); } } }',
+      errors: [{ message: ERROR_MSG, type: 'Identifier' }]
+    },
+    {
+      code: 'var obj = { foo() { foo(); } }',
+      errors: [{ message: ERROR_MSG, type: 'Identifier' }]
+    }
+  ]
 });
